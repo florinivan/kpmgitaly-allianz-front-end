@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DashboardActivity from '@kpmg/shared/src/components/DashboardActivity'
 import { 
   Box, 
   Typography,
@@ -11,7 +12,6 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { brandColors } from '../theme-config';
-import { DataSourceType } from '../types/DataSourceType';
 
 // Import components
 import ImportMethodTabs from '../components/ImportMethodTabs';
@@ -72,110 +72,129 @@ const DataImportPage: React.FC = () => {
         Importa dati
       </Typography>
 
-      {/* Import method tabs */}
-      <ImportMethodTabs activeTab={activeTab} onTabChange={handleTabChange} />
+      <Box sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' }, // colonna su xs, riga su md+
+          gap: 2,      // 16px di spazio tra le colonne
+          p: 2
+        }}
+      >
 
-      {/* Stepper */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
-        <Stepper activeStep={activeStep} alternativeLabel sx={{ width: '50%' }}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel 
-                sx={{
-                  '& .MuiStepLabel-iconContainer': {
-                    '& .MuiStepIcon-root': {
-                      color: activeStep >= Number(label) - 1 ? brandColors.primary : '#bdbdbd',
-                      width: 36,
-                      height: 36
-                    }
-                  }
-                }}
-              >
-                {label}
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-      </Box>
+        <Box sx={{ flex: 2, p: 2 }}>
+          {/* Import method tabs */}
+          <ImportMethodTabs activeTab={activeTab} onTabChange={handleTabChange} />
 
-      {/* Success notification */}
-      {uploadSuccess && (
-        <Alert 
-          severity="success"
-          sx={{ 
-            mb: 3,
-            display: 'flex',
-            alignItems: 'center',
-            bgcolor: '#e8f5e9',
-            '& .MuiAlert-icon': {
-              color: '#4caf50'
-            }
-          }}
-          icon={<CheckCircleOutlineIcon fontSize="inherit" />}
-          action={
-            <IconButton size="small" onClick={handleCloseSuccess}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          }
-        >
-          File_name caricato con successo
-        </Alert>
-      )}
-
-      {/* Step 1: Select data type */}
-      {activeStep === 0 && (
-        <DataTypeSelector 
-          dataSourceTypes={dataSourceTypes}
-          selectedSource={selectedSource}
-          onSourceSelect={handleSourceSelect}
-          onNext={handleNext}
-        />
-      )}
-
-      {/* Step 2: File Upload */}
-      {activeStep === 1 && (
-        <Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Box sx={{ width: '60%' }}>
-              <FileUploadSection onFileUpload={handleFileUpload} />
-            </Box>
-
-            <Box sx={{ width: '35%' }}>
-              <ImportedFileInfo 
-                file={uploadedFile} 
-                fallbackName="document_file_name.pdf"
-                fileSize="100kb"
-                status="Complete"
-              />
-            </Box>
+          {/* Stepper */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
+            <Stepper activeStep={activeStep} alternativeLabel sx={{ width: '50%' }}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel 
+                    sx={{
+                      '& .MuiStepLabel-iconContainer': {
+                        '& .MuiStepIcon-root': {
+                          color: activeStep >= Number(label) - 1 ? brandColors.primary : '#bdbdbd',
+                          width: 36,
+                          height: 36
+                        }
+                      }
+                    }}
+                  >
+                    {label}
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
           </Box>
 
-          <NavigationControls 
-            onBack={handleBack}
-            onNext={handleNext}
-            nextLabel="Next"
-            backLabel="Back"
-          />
-        </Box>
-      )}
+          {/* Success notification */}
+          {uploadSuccess && (
+            <Alert 
+              severity="success"
+              sx={{ 
+                mb: 3,
+                display: 'flex',
+                alignItems: 'center',
+                bgcolor: '#e8f5e9',
+                '& .MuiAlert-icon': {
+                  color: '#4caf50'
+                }
+              }}
+              icon={<CheckCircleOutlineIcon fontSize="inherit" />}
+              action={
+                <IconButton size="small" onClick={handleCloseSuccess}>
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              }
+            >
+              File_name caricato con successo
+            </Alert>
+          )}
 
-      {/* Step 3: Confirmation */}
-      {activeStep === 2 && (
-        <Box>
-          <Typography variant="h6" gutterBottom>
-            Confirm Import
-          </Typography>
-          <Typography variant="body1">Source Type: {selectedSource}</Typography>
-          <Typography variant="body1">File Name: {uploadedFile?.name || 'document_file_name.pdf'}</Typography>
-          
-          <NavigationControls 
-            onBack={handleBack}
-            onNext={() => console.log('Import completed')}
-            nextLabel="Complete"
-            backLabel="Back"
+          {/* Step 1: Select data type */}
+          {activeStep === 0 && (
+            <DataTypeSelector 
+              dataSourceTypes={dataSourceTypes}
+              selectedSource={selectedSource}
+              onSourceSelect={handleSourceSelect}
+              onNext={handleNext}
+            />
+          )}
+
+          {/* Step 2: File Upload */}
+          {activeStep === 1 && (
+            <Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Box sx={{ width: '60%' }}>
+                  <FileUploadSection onFileUpload={handleFileUpload} />
+                </Box>
+
+                <Box sx={{ width: '35%' }}>
+                  <ImportedFileInfo 
+                    file={uploadedFile} 
+                    fallbackName="document_file_name.pdf"
+                    fileSize="100kb"
+                    status="Complete"
+                  />
+                </Box>
+              </Box>
+
+              <NavigationControls 
+                onBack={handleBack}
+                onNext={handleNext}
+                nextLabel="Next"
+                backLabel="Back"
+              />
+            </Box>
+          )}
+
+          {/* Step 3: Confirmation */}
+          {activeStep === 2 && (
+            <Box>
+              <Typography variant="h6" gutterBottom>
+                Confirm Import
+              </Typography>
+              <Typography variant="body1">Source Type: {selectedSource}</Typography>
+              <Typography variant="body1">File Name: {uploadedFile?.name || 'document_file_name.pdf'}</Typography>
+              
+              <NavigationControls 
+                onBack={handleBack}
+                onNext={() => console.log('Import completed')}
+                nextLabel="Complete"
+                backLabel="Back"
+              />
+            </Box>
+          )}
+        </Box>
+
+        <Box sx={{ flex: 1, p: 2 }}>
+          <DashboardActivity 
+            title="Dati importati"
+            action_label = "SCARICA"
           />
         </Box>
-      )}
+
+      </Box>
     </Box>
   );
 };

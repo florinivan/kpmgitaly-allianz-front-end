@@ -25,8 +25,7 @@ import {
 import { WorkflowItem } from '../types/WorkflowItem';
 import { fetchWorkflowData } from '../services/workflow.service';
 import { useAuth } from '../contexts/AuthContext';
-import { brandColors } from '../theme-config';
-import DashboardActivity from '../components/DashboardActivity';
+import DashboardActivity from '@kpmg/shared/src/components/DashboardActivity'
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();

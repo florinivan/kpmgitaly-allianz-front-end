@@ -15,9 +15,11 @@ import { fetchWorkflowData } from '../services/workflow.service';
 
 interface DashboardActivityProps {
   limit?: number;
+  title?: string;
+  action_label?: string;
 }
 
-const DashboardActivity: React.FC<DashboardActivityProps> = ({ limit = 4 }) => {
+const DashboardActivity: React.FC<DashboardActivityProps> = ({ limit = 4, title = 'Activity', action_label = 'VEDI TUTTE' }) => {
   const navigate = useNavigate();
   const [activities, setActivities] = useState<WorkflowItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -93,7 +95,7 @@ const DashboardActivity: React.FC<DashboardActivityProps> = ({ limit = 4 }) => {
     >
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="subtitle1" fontWeight={500}>
-          Activity
+          {title}
         </Typography>
         <Typography
           variant="body2"
@@ -104,7 +106,7 @@ const DashboardActivity: React.FC<DashboardActivityProps> = ({ limit = 4 }) => {
           }}
           onClick={handleSeeAllClick}
         >
-          VEDI TUTTE
+          {action_label}
         </Typography>
       </Box>
 
