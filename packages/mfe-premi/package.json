@@ -1,0 +1,45 @@
+{
+  "name": "@kpmg/mfe-premi",
+  "version": "1.0.0",
+  "description": "Module premi microfrontend",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "webpack serve --config webpack.config.js --mode development",
+    "build": "webpack --config webpack.config.js --mode production",
+    "test": "jest",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.14.2",
+    "zustand": "^4.5.2",
+    "@mui/material": "^5.15.12",
+    "@mui/icons-material": "^5.15.15",
+    "@mui/x-data-grid": "^7.0.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "i18next": "^22.4.15",
+    "react-i18next": "^12.2.2",
+    "axios": "^1.6.8"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
+    "@types/react-router-dom": "^5.3.3",
+    "typescript": "^5.7.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "html-webpack-plugin": "^5.5.3",
+    "ts-loader": "^9.5.1",
+    "css-loader": "^6.8.1",
+    "style-loader": "^3.3.3"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
+
