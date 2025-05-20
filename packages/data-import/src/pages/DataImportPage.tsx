@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import DashboardActivity from '@kpmg/shared/src/components/DashboardActivity'
+import DetailPanel from '@kpmg/shared/src/components/DetailPanel'
+import DetailPanelContentData from '../components/DetailPanelContentData'
 import { 
   Box, 
   Typography,
@@ -19,6 +20,7 @@ import DataTypeSelector from '../components/DataTypeSelector';
 import FileUploadSection from '../components/FileUploadSection';
 import ImportedFileInfo from '../components/ImportedFileInfo';
 import NavigationControls from '../components/NavigationControls';
+import { useNavigate } from 'react-router-dom';
 
 // Step labels
 const steps = ['1', '2', '3'];
@@ -30,6 +32,8 @@ const DataImportPage: React.FC = () => {
   const [selectedSource, setSelectedSource] = useState<string>('Actual SAP BW');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   // Handle tab changes
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -65,6 +69,15 @@ const DataImportPage: React.FC = () => {
     'Riepilogo AT',
     'GWP/GPE No model'
   ];
+
+  // Function to navigate to workflow control with filters
+  const handleTaskItemClick = (utente: string, modulo: string) => {
+    // Encode parameters and navigate using React Router
+    const userParam = utente ? encodeURIComponent(utente) : 'all';
+    const moduleParam = modulo ? encodeURIComponent(modulo) : 'all';
+    
+    navigate(`/workflow-control/${userParam}/${moduleParam}`);
+  };
 
   return (
     <Box sx={{ maxWidth: 1200, mx: 'auto', p: 3 }}>
@@ -188,10 +201,15 @@ const DataImportPage: React.FC = () => {
         </Box>
 
         <Box sx={{ flex: 1, p: 2 }}>
-          <DashboardActivity 
+          <DetailPanel 
             title="Dati importati"
             action_label = "SCARICA"
-          />
+          >
+            <DetailPanelContentData
+              limit={4}
+              onItemClick={handleTaskItemClick}
+            />
+          </DetailPanel>
         </Box>
 
       </Box>

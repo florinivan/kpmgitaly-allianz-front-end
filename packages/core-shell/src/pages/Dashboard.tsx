@@ -25,7 +25,8 @@ import {
 import { WorkflowItem } from '../types/WorkflowItem';
 import { fetchWorkflowData } from '../services/workflow.service';
 import { useAuth } from '../contexts/AuthContext';
-import DashboardActivity from '@kpmg/shared/src/components/DashboardActivity'
+import DetailPanel from '@kpmg/shared/src/components/DetailPanel'
+import DetailPanelContentActivity from '../components/DetailPanelContentActivity'
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
@@ -301,7 +302,15 @@ const Dashboard: React.FC = () => {
 
         {/* Right column - Activity section */}
         <Grid item xs={12} md={4}>
-          <DashboardActivity limit={4} />
+          <DetailPanel 
+            title="Activity"
+            action_label = "VEDI TUTTI"
+          >
+            <DetailPanelContentActivity
+              limit={4}
+              onItemClick={handleTaskItemClick}
+            />
+          </DetailPanel>
         </Grid>
       </Grid>
     </Box>
